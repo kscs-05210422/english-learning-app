@@ -1,65 +1,131 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { getStreakInfo, type StreakInfo } from "@/lib/storage";
+
+export default function HomePage() {
+  const [streak, setStreak] = useState<StreakInfo | null>(null);
+
+  useEffect(() => {
+    setStreak(getStreakInfo());
+  }, []);
+
+  const todayStudied =
+    streak?.lastStudyDate === new Date().toISOString().split("T")[0];
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="flex flex-col flex-1 px-4 py-6 gap-5">
+      {/* Header */}
+      <div className="flex items-center justify-between pt-2">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-800">英語学習</h1>
+          <p className="text-sm text-gray-500">英検3級を目指そう！</p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+        <div className="text-4xl">🦜</div>
+      </div>
+
+      {/* Streak Card */}
+      <div className="animate-bounce-in">
+        {streak && streak.currentStreak > 0 ? (
+          <div className="bg-gradient-to-r from-orange-400 to-amber-400 rounded-2xl p-5 text-white shadow-md">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-5xl">🔥</span>
+                <div>
+                  <p className="text-3xl font-bold leading-none">
+                    {streak.currentStreak}日
+                  </p>
+                  <p className="text-sm opacity-90 mt-0.5">連続学習中！</p>
+                </div>
+              </div>
+              <div className="text-right bg-white/20 rounded-xl p-3">
+                <p className="text-xs opacity-80">最高記録</p>
+                <p className="text-2xl font-bold">{streak.longestStreak}日</p>
+              </div>
+            </div>
+            <div className="mt-3 pt-3 border-t border-white/20 flex justify-between text-xs opacity-80">
+              <span>⭐ {streak.totalXP} XP 獲得済み</span>
+              {todayStudied && <span>✅ 今日の学習完了！</span>}
+            </div>
+          </div>
+        ) : (
+          <div className="bg-white rounded-2xl p-5 shadow-md border-2 border-dashed border-gray-200 text-center">
+            <div className="text-4xl mb-2">🌱</div>
+            <p className="font-bold text-gray-700 text-lg">さあ、始めよう！</p>
+            <p className="text-sm text-gray-400 mt-1">
+              最初の一歩で連続学習スタート🔥
+            </p>
+          </div>
+        )}
+      </div>
+
+      {/* Mode Buttons */}
+      <div className="flex flex-col gap-4 animate-slide-up">
+        <p className="text-sm font-semibold text-gray-500 text-center">
+          今日は何を練習する？
+        </p>
+
+        <Link href="/chunk">
+          <div className="bg-gradient-to-r from-[#58CC02] to-[#46a302] rounded-2xl p-5 shadow-md text-white active:scale-95 transition-transform">
+            <div className="flex items-center gap-4">
+              <div className="bg-white/20 rounded-xl p-3 text-4xl">📚</div>
+              <div className="flex-1">
+                <p className="text-xl font-bold">チャンク学習</p>
+                <p className="text-sm opacity-90 mt-0.5">日常フレーズをまとめて覚えよう</p>
+                <div className="flex gap-2 mt-2">
+                  <span className="bg-white/20 text-xs px-2 py-0.5 rounded-full">100フレーズ</span>
+                  <span className="bg-white/20 text-xs px-2 py-0.5 rounded-full">解説付き</span>
+                </div>
+              </div>
+              <span className="text-2xl opacity-60">›</span>
+            </div>
+          </div>
+        </Link>
+
+        <Link href="/vocabulary">
+          <div className="bg-gradient-to-r from-[#1CB0F6] to-[#0090D0] rounded-2xl p-5 shadow-md text-white active:scale-95 transition-transform">
+            <div className="flex items-center gap-4">
+              <div className="bg-white/20 rounded-xl p-3 text-4xl">🔤</div>
+              <div className="flex-1">
+                <p className="text-xl font-bold">単語モード</p>
+                <p className="text-sm opacity-90 mt-0.5">英検3級の単語をマスター</p>
+                <div className="flex gap-2 mt-2">
+                  <span className="bg-white/20 text-xs px-2 py-0.5 rounded-full">200単語</span>
+                  <span className="bg-white/20 text-xs px-2 py-0.5 rounded-full">例文付き</span>
+                </div>
+              </div>
+              <span className="text-2xl opacity-60">›</span>
+            </div>
+          </div>
+        </Link>
+
+        <Link href="/conversation">
+          <div className="bg-gradient-to-r from-[#CE82FF] to-[#9B59B6] rounded-2xl p-5 shadow-md text-white active:scale-95 transition-transform">
+            <div className="flex items-center gap-4">
+              <div className="bg-white/20 rounded-xl p-3 text-4xl">💬</div>
+              <div className="flex-1">
+                <p className="text-xl font-bold">会話モード</p>
+                <p className="text-sm opacity-90 mt-0.5">サクラ先生と英語で話そう</p>
+                <div className="flex gap-2 mt-2">
+                  <span className="bg-white/20 text-xs px-2 py-0.5 rounded-full">5シナリオ</span>
+                  <span className="bg-white/20 text-xs px-2 py-0.5 rounded-full">音声あり</span>
+                </div>
+              </div>
+              <span className="text-2xl opacity-60">›</span>
+            </div>
+          </div>
+        </Link>
+      </div>
+
+      {/* Footer message */}
+      <div className="mt-auto pb-4 text-center">
+        <p className="text-sm text-gray-400">
+          {todayStudied
+            ? "🌟 今日もよく頑張りました！また明日！"
+            : "毎日少しずつが上達の近道 💪"}
+        </p>
+      </div>
     </div>
   );
 }
