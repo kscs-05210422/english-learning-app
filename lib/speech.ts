@@ -37,32 +37,39 @@ export function isSpeechRecognitionSupported(): boolean {
   return "SpeechRecognition" in window || "webkitSpeechRecognition" in window;
 }
 
+type AnyWindow = Window & {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  SpeechRecognition?: new () => any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  webkitSpeechRecognition?: new () => any;
+};
+
 export function startListening(
   lang: "en-US" | "ja-JP",
   onResult: (result: RecognitionResult) => void,
   onError: (msg: string) => void
 ): (() => void) {
-  const SpeechRecognition =
-    (window as typeof window & { SpeechRecognition?: typeof window.SpeechRecognition; webkitSpeechRecognition?: typeof window.SpeechRecognition })
-      .SpeechRecognition ??
-    (window as typeof window & { webkitSpeechRecognition?: typeof window.SpeechRecognition }).webkitSpeechRecognition;
+  const w = window as AnyWindow;
+  const SR = w.SpeechRecognition ?? w.webkitSpeechRecognition;
 
-  if (!SpeechRecognition) {
+  if (!SR) {
     onError("音声認識はこのブラウザでは使えません");
     return () => {};
   }
 
-  const recognition = new SpeechRecognition();
+  const recognition = new SR();
   recognition.lang = lang;
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
 
-  recognition.onresult = (event: SpeechRecognitionEvent) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  recognition.onresult = (event: any) => {
     const r = event.results[0][0];
     onResult({ transcript: r.transcript, confidence: r.confidence });
   };
 
-  recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  recognition.onerror = (event: any) => {
     if (event.error === "not-allowed") {
       onError("マイクの使用が許可されていません");
     } else if (event.error === "network") {
