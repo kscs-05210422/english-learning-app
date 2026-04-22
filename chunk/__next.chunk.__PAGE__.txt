@@ -1,9 +1,9 @@
 1:"$Sreact.fragment"
 2:I[47257,["/english-learning-app/_next/static/chunks/01xlw8hd842-c.js","/english-learning-app/_next/static/chunks/0d3shmwh5_nmn.js"],"ClientPageRoot"]
-3:I[95825,["/english-learning-app/_next/static/chunks/01xlw8hd842-c.js","/english-learning-app/_next/static/chunks/0d3shmwh5_nmn.js","/english-learning-app/_next/static/chunks/0y7kfh3c3lk~x.js","/english-learning-app/_next/static/chunks/08yoak7h~8rny.js"],"default"]
+3:I[95825,["/english-learning-app/_next/static/chunks/01xlw8hd842-c.js","/english-learning-app/_next/static/chunks/0d3shmwh5_nmn.js","/english-learning-app/_next/static/chunks/0i7iymkv_8yho.js","/english-learning-app/_next/static/chunks/0_ckb2to5hd54.js"],"default"]
 6:I[97367,["/english-learning-app/_next/static/chunks/01xlw8hd842-c.js","/english-learning-app/_next/static/chunks/0d3shmwh5_nmn.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/english-learning-app/_next/static/chunks/0y7kfh3c3lk~x.js","async":true}],["$","script","script-1",{"src":"/english-learning-app/_next/static/chunks/08yoak7h~8rny.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"Wo8ko1WVikRiv1LVKy5wf"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/english-learning-app/_next/static/chunks/0i7iymkv_8yho.js","async":true}],["$","script","script-1",{"src":"/english-learning-app/_next/static/chunks/0_ckb2to5hd54.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"GlcUrPVr4NbTj0LsvxwpJ"}
 4:{}
 5:"$0:rsc:props:children:0:props:serverProvidedParams:params"
 8:null
