@@ -1,0 +1,22 @@
+{
+  "name": "英語学習アプリ",
+  "short_name": "英語学習",
+  "description": "英検3級を目指す英語学習アプリ",
+  "start_url": "/english-learning-app/",
+  "display": "standalone",
+  "background_color": "#CE82FF",
+  "theme_color": "#CE82FF",
+  "icons": [
+    {
+      "src": "/english-learning-app/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/english-learning-app/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
